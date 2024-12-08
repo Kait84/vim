@@ -8,6 +8,8 @@ set showmode
 set hidden
 set ruler
 set smartindent
+set clipboard+=unnamed
+set paste
 
 
 "visuals
@@ -25,14 +27,12 @@ set incsearch
 set wildmenu
 set wildmode=list:longest
 set wildignore=*.docx,*.jpg,*.png,*.pdf,*.exe,*.img
-set foldmethod=manual
+set foldmethod=indent
 set ttyfast
 
 
 "plugins----------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
-    Plug 'dracula/vim'
-    Plug 'mhinz/vim-startify'
     Plug 'preservim/nerdtree'
     Plug 'BurntSushi/ripgrep'
     Plug 'junegunn/fzf'
@@ -45,14 +45,19 @@ call plug#end()
 nnoremap <SPACE> <Nop>
 let mapleader=" "
 
+
 "scripting--------------------------------------------------------------
-"code-folding
-augroup filetype_fim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=indent
-augroup END
+function! StartUp()
+    if argc() == 0
+        NERDTree
+    endif
+endfunction
+
+autocmd VimEnter * call StartUp()
 
 
 "statusbar--------------------------------------------------------------
 "set statusline=%F%m%r%h%w\ [FORMAT]\ [%{&ff}]\ [%Y]\ [%3l/%L,%3c]
+
+
 
